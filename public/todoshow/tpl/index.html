@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title id='Description'> create a basic navigation with jqxTree. </title>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" type="text/css" >
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" >
+    <link rel="stylesheet" href="lib/jqwidgets/styles/jqx.base.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+
+    <link rel="stylesheet" type="text/css" href="lib/wangEditor/dist/css/wangEditor.css">
+    <!--引用highlight的css文件-->
+    <link rel="stylesheet" type="text/css" href="lib/wangEditor/plugins/highlightJS/styles/github.css">
+    <style>
+        #edit-btn-group{
+            width: 280px;
+            margin: 5px 0 5px 2px;
+        }
+
+        #edit-btn-group .dropdown {
+            display: inline;
+            margin: 5px;
+            padding: 0;
+        }
+
+        #edit-btn-group ul.dropdown-menu {
+            min-width: 90px;
+            margin: 3px;
+            padding: 0;
+        }
+
+        #edit-btn-group ul.dropdown-menu li {
+            margin: 0;
+        }
+
+        #edit-btn-group ul.dropdown-menu li a{
+            margin: 0;
+            padding: 2px 10px 2px 10px;
+        } 
+
+         #subject-describe-container{
+            position: relative;
+            width: 100%;
+            height: 700px;
+            overflow: auto;
+        }
+
+        #subject-describe-html {
+ width: 100%;   
+        }
+
+    </style>
+    <script type="text/javascript" src="lib/jquery/dist/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.min.js"> </script>
+    <!--引用highlight的js文件-->
+    <script type="text/javascript" src="lib/wangEditor/plugins/highlightJS/highlight.pack.js"></script>
+    <script type="text/javascript" src='lib/wangEditor/dist/js/wangEditor.min.js'></script>
+
+    <script type="text/javascript" src="lib/jqwidgets/jqxcore.js"></script>
+    <script type="text/javascript" src="lib/jqwidgets/jqxdata.js"></script>
+    <script type="text/javascript" src="lib/jqwidgets/jqxbuttons.js"></script>
+    <script type="text/javascript" src="lib/jqwidgets/jqxscrollbar.js"></script>
+    <script type="text/javascript" src="lib/jqwidgets/jqxpanel.js"></script>
+    <script type="text/javascript" src="lib/jqwidgets/jqxtree.js"></script>
+    <script type="text/javascript" src="lib/jqwidgets/jqxexpander.js"></script>
+    <script type="text/javascript" src="lib/jqwidgets/jqxsplitter.js"></script>
+
+</head>
+<body>
+
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-9" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Brand</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Link</a></li>
+            <li><a href="#">Link</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    
+    <div class="container-fluid" style="padding: 0 100px 0 100px; margin-top: 60px;">
+        <div class="row">
+            <div class="col-xs-12 col-md-8" id="edit-btn-group"> 
+                <div class="dropdown">
+                    <button class="btn btn-default btn-xs" type="button" data-toggle="dropdown">
+                        编 辑 <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li class="edit-btn" id="edit-add"><a href="javascript:;">添加下级项</a></li>
+                        <li class="edit-btn" id="edit-add-before"><a href="javascript:;">在前面添加平级项</a></li>
+                        <li class="edit-btn" id="edit-add-after"><a href="javascript:;">在后面添加平级项</a></li>
+                        <li class="edit-btn" id="edit-update"><a href="javascript:;">修改该选项</a></li>
+                        <li class="edit-btn" id="edit-remove"><a href="javascript:;">删除该选项</a></li>
+                    </ul>
+                </div>
+
+                <div class="dropdown">
+                    <button class="btn btn-default btn-xs" type="button" data-toggle="dropdown">
+                        其 他 <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li class="edit-btn" id="edit-disable"><a href="javascript:;">禁用该项</a></li>
+                        <li class="edit-btn" id="edit-enable-all"><a href="javascript:;">启用所有项</a></li>
+                        <li class="edit-btn" id="edit-expand"><a href="javascript:;">展开该项</a></li>
+                        <li class="edit-btn" id="edit-collapse"><a href="javascript:;">关闭该项</a></li>
+                        <li class="edit-btn" id="edit-expand-all"><a href="javascript:;">展开所有项</a></li>
+                        <li class="edit-btn" id="edit-collapse-all"><a href="javascript:;">关闭所有项</a></li>
+                        <li class="edit-btn" id="edit-next"><a href="javascript:;">下一项</a></li>
+                        <li class="edit-btn" id="edit-previous"><a href="javascript:;">上一项</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+   
+        
+        <div class="row">
+            <div class="col-xs-12 col-md-8" id="splitter"> 
+                <div id='subject-tree'>  </div>
+                
+                <div id="content-panel"> 
+                    <ul class="nav nav-tabs" id="subject-menu">
+                        <li role="presentation" class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                                开发管理 <span class="caret"></span>
+                            </a>
+                             
+                            <ul class="dropdown-menu">
+                                <li><a href="#">模块需求</a></li>
+                                <li><a href="#">模块设计</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">任务活动</a></>
+                            </ul>
+                        </li>
+                     
+                        <li role="presentation" class="dropdown active">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button">
+                                模块API <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">API描述</a></li>
+                                <li><a href="#">API测试</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">使用记录</a></>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div id="subject-content"> 
+
+                        <div id="subjectView">
+                            <div class="title">
+                                <h2  id="subject-name" style="margin: 5px; width: 85%; display: inline; "> </h2 >
+                                <div class="btn-group pull-right" style="margin: 5px; display: inline; float: left;">
+                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
+                                    编 辑 <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="#">修 改</a></li>
+                                        <li><a href="#">移 动</a></li>
+                                        <li><a href="#">删 除</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="#">其 他</a></li>
+                                        <li><a href="#">设 置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="subject-describe-container">
+                                <div id="subject-describe-html"> </div>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer" class="mainbg">
+        <div id="navigation">
+            <ul>
+                <li><a href="#">Contacts</a> |</li>
+                <li><a href="#">Advertising</a></li>
+            </ul>
+        </div>
+        <p>Copyright &copy;. All rights reserved. Design from <a href="#" class="bft" title="subject manage">letuis.com</a></p>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+      
+        $("#splitter").jqxSplitter({  width: '100%', height: 800, panels: [{ size: 250}] });
+
+        var source = null;
+        var $tree = $('#subject-tree');
+        var source = null;
+        $.ajax({
+            async: false,
+            url: "/myProject",  //data/ajaxroot.htm
+            success: function (data, status, xhr) {
+                if(typeof data != 'object') data = jQuery.parseJSON(data); 
+                if(data.result) source = data.result.list;
+                console.log(source);
+            }
+        });
+
+        $tree.jqxTree({ source: source,  height: '100%', width: '100%' });
+        // focus the jqxTree.
+        $tree.jqxTree('focus');
+        
+        $tree.on('expand', function (event) {
+            var $element = $(event.args.element);
+            var loader = false;
+            var loaderItem = null;
+            var children = $element.find('ul:first').children();
+            $.each(children, function () {
+                var item = $tree.jqxTree('getItem', this);
+                if (item && item.label == 'Loading...') {
+                    loaderItem = item;
+                    loader = true;
+                    return false
+                };
+            });
+            if (loader) {
+                $.ajax({
+                    url: loaderItem.value,
+                    success: function (data, status, xhr) {
+                        if(typeof data != 'object') data = jQuery.parseJSON(data);
+                        if(data.result) data = data.result.list;
+                        $tree.jqxTree('addTo', data, $element[0]);
+                        $tree.jqxTree('removeItem', loaderItem.element);
+                    }
+                });
+            }
+        });
+
+        ///
+        /// 在初始化编辑器
+        
+        
+
+         // 最后给树绑事件
+        $tree.on('select', function (event) { 
+ 
+            $.ajax({   
+                url: 'subjectDetail/' + event.args.element.id,
+                success: function (data, status, xhr) {
+                    if(typeof data != 'object') data = jQuery.parseJSON(data);
+                    if(data.result) {
+                        $("#subject-name").html( data.result.name );
+                        $("#subject-describe-html").html( data.result.content )
+                    }
+                }
+            });
+
+        });
+ 
+        // Add 
+        $('#edit-add').click(function () {
+            var selectedItem = $tree.jqxTree('selectedItem');
+
+            if (selectedItem != null) {
+                // adds an item with label: 'item' as a child of the selected item. The last parameter determines whether to refresh the Tree or not.
+                // If you want to use the 'addTo' method in a loop, set the last parameter to false and call the 'render' method after the loop.
+                $tree.jqxTree('addTo', { label: 'Item' }, selectedItem.element, false);
+                // update the tree.
+                $tree.jqxTree('render');
+            }
+            else {
+                $tree.jqxTree('addTo', { label: 'Item' }, null, false);
+                // update the tree.
+                $tree.jqxTree('render');
+            }
+        });
+
+        // Add Before
+        $('#edit-addBefore').click(function () {
+            var selectedItem = $tree.jqxTree('selectedItem');
+
+            if (selectedItem != null) {
+                $tree.jqxTree('addBefore', { label: 'Item' }, selectedItem.element, false);
+                // update the tree.
+                $tree.jqxTree('render');
+            }
+        });
+
+        // Update
+        $('#edit-update').click(function () {
+            var selectedItem = $tree.jqxTree('selectedItem');
+
+            if (selectedItem != null) {
+                $tree.jqxTree('updateItem', { label: 'Item' }, selectedItem.element);
+                // update the tree.
+                $tree.jqxTree('render');
+            }
+        });
+
+        // Add After
+        $('#edit-addAfter').click(function () {
+            var selectedItem = $tree.jqxTree('selectedItem');
+
+            if (selectedItem != null) {
+                $tree.jqxTree('addAfter', { label: 'Item' }, selectedItem.element, false);
+                // update the tree.
+                $tree.jqxTree('render');
+            }
+        });
+
+        // Remove 
+        $('#edit-remove').click(function () {
+            var selectedItem = $tree.jqxTree('selectedItem');
+            if (selectedItem != null) {
+                // removes the selected item. The last parameter determines whether to refresh the Tree or not.
+                // If you want to use the 'removeItem' method in a loop, set the last parameter to false and call the 'render' method after the loop.
+                $tree.jqxTree('removeItem', selectedItem.element, false);
+                // update the tree.
+                $tree.jqxTree('render');
+            }
+        });
+
+        // Disable
+        $('#edit-disable').click(function () {
+            var selectedItem = $tree.jqxTree('selectedItem');
+            if (selectedItem != null) {
+                $tree.jqxTree('disableItem', selectedItem.element);
+            }
+        });
+
+        // Expand
+        $('#edit-expand').click(function () {
+            var selectedItem = $tree.jqxTree('selectedItem');
+            if (selectedItem != null) {
+                $tree.jqxTree('expandItem', selectedItem.element);
+            }
+        });
+
+        // Expand
+        $('#edit-collapse').click(function () {
+            var selectedItem = $tree.jqxTree('selectedItem');
+            if (selectedItem != null) {
+                $tree.jqxTree('collapseItem', selectedItem.element);
+            }
+        });
+
+        // Expand All
+        $('#edit-expand-all').click(function () {
+            $tree.jqxTree('expandAll');
+        });
+
+        // Collapse All
+        $('#edit-collapse-all').click(function () {
+            $tree.jqxTree('collapseAll');
+        });
+
+        // Enable All
+        $('#edit-enable-all').click(function () {
+            $tree.jqxTree('enableAll');
+        });
+
+        // Select Next Item
+        $('#edit-next').click(function () {
+            var selectedItem = $tree.jqxTree('selectedItem');
+            var nextItem = $tree.jqxTree('getNextItem', selectedItem.element);
+            if (nextItem != null) {
+                $tree.jqxTree('selectItem', nextItem.element);
+                $tree.jqxTree('ensureVisible', nextItem.element);
+            }
+        });
+
+        // Select Previous Item
+        $('#edit-previous').click(function () {
+            var selectedItem = $tree.jqxTree('selectedItem');
+            var prevItem = $tree.jqxTree('getPrevItem', selectedItem.element);
+            if (prevItem != null) {
+                $tree.jqxTree('selectItem', prevItem.element);
+                $tree.jqxTree('ensureVisible', prevItem.element);
+            }
+        });
+        $tree.jqxTree('selectItem', $tree.find('li:first')[0]);
+        $tree.css('visibility', 'visible');
+
+ 
+    });
+
+</script>
+<script src="lib/jquery.form/jquery.form.js"></script>
+<script>
+    
+    function showRequest(formData,jqForm,options){
+      // return $("#categoryForm").valid();
+    }
+
+
+    function dealResponse(responseText,statusText) {
+      if(statusText=='success'){
+        alert('success')
+         
+      } else {
+        alert('fail')
+      }
+    }
+
+
+    $('#subjectForm').submit(function(){
+        
+        return false; //此处必须返回false，阻止常规的form提交
+    });
+
+    $('#saveSubjectFormBtn').click(function(){
+
+        $('#subjectForm').ajaxSubmit({
+          type:"post",
+          url:"/saveSubject?time="+ (new Date()).getTime(),
+          beforeSubmit:showRequest,
+          success:dealResponse
+        });
+
+    });
+
+    
+ 
+</script>
+</html>
